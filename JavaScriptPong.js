@@ -1,7 +1,7 @@
 //Variaveis Bolinha
 let xBol = 300;
 let yBol = 200;
-let dBol = 15;
+let dBol = 13;
 let raioBol = dBol / 2;
 
 let VelXBol = 6;
@@ -24,9 +24,20 @@ let aRaq = 90
 let MeusPontos = 0;
 let PontosOponente = 0;
 
+//Sons
+let raquetada;
+let ponto;
+let trilha;
+
+function preload(){
+  trilha = loadSound("trilha.mp3")  
+  raquetada = loadSound("raquetada.mp3")  
+  ponto = loadSound("ponto.mp3")  
+}
 
 function setup() {
   createCanvas(600, 400);
+  trilha.loop();
 }
 
 let coli50false
@@ -89,6 +100,7 @@ function colisaoMinhaRaqueteBiblioteca(x,y) {
   colidiu = collideRectCircle(x, y, cRaq, aRaq, xBol, yBol, raioBol);
   if(colidiu){
     VelXBol *= -1;
+    raquetada.play();
   }
 }
 
@@ -98,16 +110,26 @@ function MovimentarRaqueteOponente(){
 }
 
 function incluirPlacar(){
+  stroke(255);
+  textAlign(CENTER);
+  textSize(16);
+  fill(color(255,140,0));
+  rect(150,10,40,20);
   fill(255);
-  text(MeusPontos,278,26);
-  text(PontosOponente,231,26);
+  text(MeusPontos,170,26);
+  fill(color(255,140,0));
+  rect(450,10,40,20);
+  fill(255);
+  text(PontosOponente,470,26);
 }
 
 function MarcaPonto(){
   if(xBol>590){
     MeusPontos += 1;
+    ponto.play();
   }
   if(xBol<10){
     PontosOponente += 1;
+    ponto.play();
   }
 }
